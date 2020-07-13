@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+   <event name="sales_order_place_after">
+       <observer name="growthrocket_tradegecko_observer_saveorder" instance="Growthrocket\Tradegecko\Observer\Saveorder" />
+   </event>
+
+   <event name="catalog_product_save_after">
+       <observer name="growthrocket_tradegecko_observer_saveproduct" instance="Growthrocket\Tradegecko\Observer\Saveproduct" />
+   </event>
+
+   <event name="catalog_product_delete_before">
+       <observer name="growthrocket_tradegecko_observer_deleteproduct" instance="Growthrocket\Tradegecko\Observer\Deleteproduct" />
+   </event>
+
+
+</config>

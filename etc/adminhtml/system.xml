@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- Anotoys 2018. All rights reserved. -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="growthrocket" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>TradeGecko - GR</label>
+            <tab>anotoys</tab>
+            <resource>Growthrocket_Tradegecko::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable_sync" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled Sync</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="token_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Token ID</label>
+                    <comment>Tokens you have generated that can be used to access the TradeGecko API.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
