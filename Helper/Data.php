@@ -10,14 +10,20 @@ class Data extends AbstractHelper
    protected $stockRegistry;
    protected $scopeConfig;
    protected $productRepository;
+   protected $order;   
+
+
+
    public function __construct(
         \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Catalog\Model\ProductRepository $productRepository
+        \Magento\Catalog\Model\ProductRepository $productRepository,
+        \Magento\Sales\Model\OrderRepository $order
     ) {
         $this->stockRegistry = $stockRegistry;  
         $this->scopeConfig = $scopeConfig;
         $this->productRepository = $productRepository;
+        $this->order = $order;
         //parent::__construct();
     }
 
@@ -25,6 +31,11 @@ class Data extends AbstractHelper
     public function test(){
     	return 1;
     }
+
+    public function loadOrder($id){
+        return $this->order->get($id); 
+    }
+
 
     public function loadProduct($id){
     	return $this->productRepository->getById($id);
@@ -180,9 +191,85 @@ class Data extends AbstractHelper
 	}
 
 
+    public function createorder($data){
 
 
+        $header = array(
+            'Content-type: application/json',
+            'Authorization: Bearer '.$this->getRequest(),
+        );
 
+
+        $get_days = isset($_GET['days']) ? (int) $_GET['days'] : 1;
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://api.tradegecko.com'.'/orders');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = json_decode(curl_exec($ch));
+        //var_dump($ch);
+        //var_dump($response);
+        curl_close($ch);
+
+
+        return $response;
+    }
+
+
+    public function createcompany($data){
+
+
+        $header = array(
+            'Content-type: application/json',
+            'Authorization: Bearer '.$this->getRequest(),
+        );
+
+
+        $get_days = isset($_GET['days']) ? (int) $_GET['days'] : 1;
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://api.tradegecko.com'.'/companies');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = json_decode(curl_exec($ch));
+        //var_dump($ch);
+        //var_dump($response);
+        curl_close($ch);
+
+
+        return $response;
+    }
+
+
+    public function createaddress($data){
+
+
+        $header = array(
+            'Content-type: application/json',
+            'Authorization: Bearer '.$this->getRequest(),
+        );
+
+
+        $get_days = isset($_GET['days']) ? (int) $_GET['days'] : 1;
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://api.tradegecko.com'.'/addresses');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = json_decode(curl_exec($ch));
+        //var_dump($ch);
+        //var_dump($response);
+        curl_close($ch);
+
+
+        return $response;
+    }
 
 
 
@@ -342,7 +429,7 @@ else
             //$vid = $createvar->variant->id;
 
 
-
+            $productdata = $data;
 
 
 
@@ -359,7 +446,7 @@ else
 
             //var_dump(array('vid'=>$vid,'pid'=>$pid));
 
-	return array('vid'=>$vid,'pid'=>$pid);
+	return $productdata;
 
 
 
